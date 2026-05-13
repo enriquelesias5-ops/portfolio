@@ -1,7 +1,4 @@
       /* --- GLOBAL STYLES --- */
-		* {
-  		  box-sizing: border-box;
-		}
         html { scroll-behavior: smooth; }
         
         body {
@@ -117,7 +114,7 @@
         /* --- SECTION DEFAULTS --- */
         section {
             min-height: 100vh;
-            padding: 50px 10%;
+            padding: 5px 10%;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -130,7 +127,7 @@
     font-size: 2.1rem;
     color: var(--primary-blue);
     letter-spacing: 5px;
-    margin-bottom: 3rem; /* Reduced from 3rem */
+    margin-bottom: 2.5rem; /* Reduced from 3rem */
     text-transform: uppercase;
     border-left: 3px solid var(--primary-blue);
     padding-left: 15px;
@@ -215,7 +212,19 @@
 
         .terminal-body { padding: 40px; font-family: 'JetBrains Mono', monospace; }
         .command-line { margin-bottom: 30px; font-size: 1.1rem; border-bottom: 1px solid rgba(80, 250, 123, 0.1); padding-bottom: 10px;}
-        .prompt { color: var(--accent-green); }
+        /* --- TERMINAL PROMPT STYLING --- */
+.prompt {
+    color: var(--accent-green); 
+    font-family: 'JetBrains Mono', monospace;
+    
+    /* ADJUST THESE VALUES */
+    font-size: 1.2rem;    /* Default is usually 0.85rem or 1rem */
+    font-weight: 800;     /* Makes it extra bold */
+    margin-right: 5px;    /* Space between > and your typing */
+    
+    /* OPTIONAL: Add a slight neon glow to match the vibe */
+    text-shadow: 0 0 5px rgba(189, 147, 249, 0.5); 
+}
         .parameter { color: #d19a66; }
 
         .input-group { margin-bottom: 35px; position: relative; }
@@ -673,20 +682,7 @@ nav a.contact-link {
     box-shadow: inset 0 0 30px rgba(0, 123, 255, 0.3), 0 0 15px rgba(0, 123, 255, 0.2);
 }
 
-/* The Circular Sweep Animation */
-.radar-sweep {
-    position: absolute;
-    top: -500%; left: -500%; width: 500%; height: 500%;
-    background: conic-gradient(from 0deg, transparent 50%, rgba(80, 250, 123, 0.4) 100%);
-    animation: rotate-sweep 4s linear infinite;
-    z-index: 1;
-    pointer-events: none;
-}
 
-@keyframes rotate-sweep {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
 
 /* Radar Grid Background Elements */
 .radar-grid-circle {
@@ -1043,17 +1039,20 @@ nav a.contact-link {
 /* Telemetry Hub Layout */
 .monitor-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Side-by-side layout */
-    gap: 30px;
-    margin-top: 1rem;
+    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal horizontal columns */
+    gap: 20px;
+    width: 100%;
+    margin-top: 2rem;
 }
 
 .monitor-feed {
-    border: 1px solid var(--primary-blue);
-    background: rgba(0, 123, 255, 0.05);
-    padding: 5px;
-    position: relative;
-    box-shadow: 0 0 15px rgba(0, 123, 255, 0.1);
+    background: rgba(0, 20, 40, 0.5);
+    border: 1px solid rgba(0, 123, 255, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 350px; /* Limits height so they stay in a horizontal row */
 }
 
 .feed-header {
@@ -1071,13 +1070,24 @@ nav a.contact-link {
     position: relative;
     overflow: hidden;
     line-height: 0;
+    height: 250px;      /* Set a fixed height so all three boxes look identical */
 }
 
-.asset-video {
+..asset-video {
     width: 100%;
-    filter: grayscale(1) brightness(1.2) contrast(1.1); /* Matches your gray/blue theme */
+    height: 100%;       /* Add this */
+    object-fit: cover;  /* This forces the video to fill the box without stretching */
+    filter: grayscale(1) brightness(1.2) contrast(1.1);
     opacity: 0.8;
 }
+
+
+/* Responsive fix: Stack them on top of each other on mobile */
+@media (max-width: 900px) {
+    .monitor-grid {
+        grid-template-columns: 1fr;
+    }
+} 
 
 .feed-footer {
     font-family: 'JetBrains Mono', monospace;
@@ -1114,4 +1124,113 @@ nav a.contact-link {
     .monitor-grid {
         grid-template-columns: 1fr; /* Stack vertically on phones */
     }
+}
+.ops-center {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.terminal-box, .logs-box {
+    height: 300px;
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(0, 5, 10, 0.9) !important;
+    font-size: 0.85rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#terminal-output, #log-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    color: #50fa7b;
+}
+
+/* Terminal Input */
+.input-line { display: flex; align-items: center; padding: 10px; border-top: 1px solid rgba(0,255,0,0.1); }
+#terminal-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    outline: none;
+    flex: 1;
+    font-family: inherit;
+    margin-left: 10px;
+}
+
+/* Red Alert for Access Denied */
+.access-denied {
+    animation: red-alert 0.2s 3;
+}
+
+@keyframes red-alert {
+    0% { background: rgba(255, 0, 0, 0.2); }
+    100% { background: transparent; }
+}
+
+.cursor-blink { animation: terminal-cursor 1s steps(2) infinite; }
+@keyframes terminal-cursor { to { visibility: hidden; } }
+
+/* --- OPS CENTER LAYOUT --- */
+.ops-center {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.terminal-box, .logs-box {
+    height: 300px;
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(0, 5, 10, 0.9) !important;
+    font-size: 0.85rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#terminal-output, #log-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    color: #50fa7b;
+}
+
+/* Terminal Input */
+.input-line { display: flex; align-items: center; padding: 10px; border-top: 1px solid rgba(0,255,0,0.1); }
+#terminal-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    outline: none;
+    flex: 1;
+    font-family: inherit;
+    margin-left: 10px;
+}
+
+/* Red Alert for Access Denied */
+.access-denied {
+    animation: red-alert 0.2s 3;
+}
+
+@keyframes red-alert {
+    0% { background: rgba(255, 0, 0, 0.2); }
+    100% { background: transparent; }
+}
+
+.cursor-blink { animation: terminal-cursor 1s steps(2) infinite; }
+@keyframes terminal-cursor { to { visibility: hidden; } }
+.node-pulse {
+    display: inline-block;
+    animation: pulse-icon 2s infinite ease-in-out;
+    color: var(--accent-green);
+    margin-right: 5px;
+}
+
+@keyframes pulse-icon {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
 }
