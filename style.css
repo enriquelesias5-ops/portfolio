@@ -1,8 +1,5 @@
       /* --- GLOBAL STYLES --- */
         html { scroll-behavior: smooth; }
-           * {
-    box-sizing: border-box;
-} 
         body {
             font-family: 'Inter', sans-serif;
             margin: 0;
@@ -57,6 +54,21 @@
     100% { background-position: 0% 200%; }
 }
 
+/* Pulsing & Scanning Nodes */
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 2.8rem;
+    left: -32px !important;
+    width: 12px;
+    height: 12px;
+    background: var(--accent-green);
+    border-radius: 50%;
+    z-index: 5;
+    /* Pulsing animation */
+    box-shadow: 0 0 0 0 rgba(80, 250, 123, 0.7);
+    animation: pulse-node 2s infinite;
+}
 
 @keyframes pulse-node {
     0% { box-shadow: 0 0 0 0 rgba(80, 250, 123, 0.7); }
@@ -129,10 +141,10 @@
         /* --- CARDS --- */
         /* 5. LEFT-ALIGNED TIMELINE SYSTEM --- */
     .content-grid { 
-    display: flex ;
-    flex-direction: row ; 
+    display: flex !important;
+    flex-direction: column !important; 
     align-items: flex-start; 
-    gap: 20rem;
+    gap: 4rem;
     /* Change width to 80% to create equal 10% gaps on both sides */
     width: 80%; 
     /* Remove the fixed max-width to allow expansion */
@@ -142,7 +154,6 @@
     padding: 0 0 0 40px; 
     box-sizing: border-box;
     position: relative;
-		justify-content: center;
 }
         
         .glass-card {
@@ -549,8 +560,18 @@ nav a.contact-link {
         border: 2px solid var(--accent-green);
         border-radius: 50%;
         z-index: 5;
-    	animation: pulse-node 2s infinite;
         box-shadow: 0 0 15px var(--accent-green);
+    content: "01011010 11001010 00110101";
+    position: absolute;
+    top: 0; left: 0;
+    font-size: 10px;
+    color: var(--accent-green);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    overflow: hidden;
+    height: 100%; width: 100%;
+    word-break: break-all;
     }
     /* --- 6. CARD CONTENT STYLES --- */
     .card-label {
