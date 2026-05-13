@@ -157,7 +157,15 @@
     position: relative;
 }
         
-    
+        .glass-card {
+          transition: transform 0.1s ease-out;
+            background: var(--card-bg);
+            border: 1.5px solid rgba(255,255,255,0.05);
+            padding: 2.5rem;
+            position: relative;
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(8px);
+        }
         .glass-card:hover { 
             border-color: var(--primary-blue); 
             transform: translateY(-10px) scale(1.02); 
@@ -512,16 +520,10 @@ nav a.contact-link {
     position: relative;
     transition: all 0.3s ease;
     width: 100% !important; /* Forces it to fill the grid width */
-     /* Increased to fill that right-side gap */
+    max-width: 950px;       /* Increased to fill that right-side gap */
     box-sizing: border-box;
     text-align: left;
     z-index: 2;
-    flex: 1;                /* Makes all three boxes equal size */
-    max-width: 30%;         /* Limits the size so they don't get too big */
-    min-width: 250px;       /* Prevents them from getting too skinny on small screens */
-    background: rgba(0, 20, 40, 0.6);
-    border: 1px solid var(--primary-blue);
-    /* ... keep your existing styles ... */
 }
 
 /* Style for the "Proof" link */
@@ -538,7 +540,6 @@ nav a.contact-link {
     transition: 0.3s;
     background: rgba(80, 250, 123, 0.05);
     letter-spacing: 1px;
-	animation: pulse-node 2s infinite;
 }
 
 .proof-link:hover {
@@ -561,7 +562,17 @@ nav a.contact-link {
         border-radius: 50%;
         z-index: 5;
         box-shadow: 0 0 15px var(--accent-green);
-   
+    content: "01011010 11001010 00110101";
+    position: absolute;
+    top: 0; left: 0;
+    font-size: 10px;
+    color: var(--accent-green);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    overflow: hidden;
+    height: 100%; width: 100%;
+    word-break: break-all;
     }
     /* --- 6. CARD CONTENT STYLES --- */
     .card-label {
